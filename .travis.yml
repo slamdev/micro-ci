@@ -2,8 +2,13 @@ sudo: required
 
 before_install:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker version
 - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod +x skaffold && sudo mv skaffold /usr/local/bin
+- ls -la /usr/local/bin/skaffold
+- skaffold version
 - curl -Lo yq https://github.com/mikefarah/yq/releases/download/latest/yq_linux_amd64 && chmod +x yq && sudo mv yq /usr/local/bin
+- ls -la /usr/local/bin/yq
+- yq -V
 
 script:
 - make build
