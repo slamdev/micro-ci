@@ -5,7 +5,7 @@ before_install:
 - docker version
 - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod +x skaffold && sudo mv skaffold /usr/local/bin
 - skaffold version
-- curl -Lo yq https://github.com/mikefarah/yq/releases/latest/yq_linux_amd64 && chmod +x yq && sudo mv yq /usr/local/bin
+- curl -Lo yq https://github.com/mikefarah/yq/releases/download/2.1.1/yq_linux_amd64 && chmod +x yq && sudo mv yq /usr/local/bin
 - yq -V
 
 script:
