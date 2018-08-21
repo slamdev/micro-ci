@@ -1,6 +1,6 @@
 # namespace-configuration should be first in the list
-INFRA_MODULES := infra/namespace-configuration $(shell find -mindepth 1 -maxdepth 1 -type d infra | grep -v 'namespace-configuration')
-SERVICE_MODULES := $(shell find -mindepth 1 -maxdepth 1 -type d services)
+INFRA_MODULES := infra/namespace-configuration $(shell find infra -mindepth 1 -maxdepth 1 -type d | grep -v 'namespace-configuration')
+SERVICE_MODULES := $(shell find services -mindepth 1 -maxdepth 1 -type d)
 MODULES := $(INFRA_MODULES) $(SERVICE_MODULES)
 
 BUILD_TASKS := $(foreach m,$(MODULES),build/$(m))
