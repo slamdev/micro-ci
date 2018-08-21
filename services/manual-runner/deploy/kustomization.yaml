@@ -1,0 +1,9 @@
+bases:
+- ../../../etc/kustomizations/deployment
+- ../../../etc/kustomizations/service
+patches:
+- deployment.yaml
+- expose-api.yaml
+commonLabels:
+  app: manual-runner
+namePrefix: manual-runner-

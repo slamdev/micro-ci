@@ -1,0 +1,8 @@
+bases:
+- ../../../etc/kustomizations/deployment
+- ../../../etc/kustomizations/service
+patches:
+- deployment.yaml
+commonLabels:
+  app: pipeline-creator
+namePrefix: pipeline-creator-

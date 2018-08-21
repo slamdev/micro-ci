@@ -1,0 +1,5 @@
+resources:
+- service.yaml
+namespace: micro-ci
+commonLabels:
+  project: micro-ci

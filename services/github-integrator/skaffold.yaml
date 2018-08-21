@@ -1,0 +1,16 @@
+apiVersion: skaffold/v1alpha2
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - imageName: slamdev/micro-ci-github-integrator
+    docker:
+      dockerfilePath: deploy/Dockerfile
+      cacheFrom:
+      - golang:alpine
+      - alpine
+      - slamdev/micro-ci-github-integrator
+deploy:
+  kustomize:
+    kustomizePath: deploy

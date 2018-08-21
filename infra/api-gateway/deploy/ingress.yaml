@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - host: micro-ci.slamdev.net
+    http:
+      paths:
+      - backend:
+          serviceName: svc
+          servicePort: 80

@@ -1,0 +1,9 @@
+bases:
+- ../../../etc/kustomizations/deployment
+- ../../../etc/kustomizations/service
+patches:
+- deployment.yaml
+- service.yaml
+commonLabels:
+  app: message-broker
+namePrefix: message-broker-

@@ -1,0 +1,16 @@
+apiVersion: skaffold/v1alpha2
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - imageName: slamdev/micro-ci-pipeline-creator
+    docker:
+      dockerfilePath: deploy/Dockerfile
+      cacheFrom:
+      - golang:alpine
+      - alpine
+      - slamdev/micro-ci-pipeline-creator
+deploy:
+  kustomize:
+    kustomizePath: deploy

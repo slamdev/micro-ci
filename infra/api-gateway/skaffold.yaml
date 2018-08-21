@@ -1,0 +1,6 @@
+apiVersion: skaffold/v1alpha2
+kind: Config
+deploy:
+  kustomize:
+    kustomizePath: deploy
+# admin url: http://api-gateway-admin-svc.micro-ci.svc.cluster.local/ambassador/v0/diag/
