@@ -1,8 +1,5 @@
 sudo: required
 
-services:
-- docker
-
 before_install:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
@@ -12,6 +9,14 @@ script:
 branches:
   only:
   - master
+
+addons:
+  apt:
+    packages:
+    - yq
+    - jq
+    - skaffold
+    - kustomize
 
 notifications:
   email: false
