@@ -2,6 +2,9 @@ sudo: required
 
 before_install:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- sudo add-apt-repository ppa:rmescandon/yq
+- sudo apt update
+- sudo apt install-y yq jq
 - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod +x skaffold && sudo mv skaffold /usr/local/bin
 
 script:
@@ -10,14 +13,6 @@ script:
 branches:
   only:
   - master
-
-addons:
-  apt:
-    sources:
-    - sourceline: ppa:rmescandon/yq
-    packages:
-    - yq
-    - jq
 
 notifications:
   email: false
