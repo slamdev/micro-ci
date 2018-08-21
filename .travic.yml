@@ -9,5 +9,9 @@ before_install:
 script:
 - make build
 
+branches:
+  only:
+  - master
+
 notifications:
   email: false
