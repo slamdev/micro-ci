@@ -1,9 +1,8 @@
 resources:
-  - service-account.yaml
-  - deployment.yaml
-  - admin-service.yaml
-  - api-service.yaml
-  - ingress.yaml
+- service-account.yaml
+- deployment.yaml
+- admin-service.yaml
+- api-service.yaml
 namespace: micro-ci
 commonLabels:
   project: micro-ci

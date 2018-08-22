@@ -3,7 +3,6 @@ bases:
 - ../../../etc/kustomizations/service
 patches:
 - deployment.yaml
-- expose-api.yaml
 commonLabels:
   app: web-ui
 namePrefix: web-ui-

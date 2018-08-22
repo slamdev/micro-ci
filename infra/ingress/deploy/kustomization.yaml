@@ -1,0 +1,7 @@
+resources:
+- ingress.yaml
+namespace: micro-ci
+commonLabels:
+  project: micro-ci
+  app: ingress
+namePrefix: ingress-
