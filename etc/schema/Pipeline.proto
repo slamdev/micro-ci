@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package = "github.com/slamdev/micro-ci/etc/schema";
+
+message Pipeline {
+    string repository = 1;
+}

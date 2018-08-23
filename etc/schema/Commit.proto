@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "github.com/slamdev/micro-ci/etc/schema";
+
+message Commit {
+    string branch = 1;
+    string revision = 2;
+    string author = 3;
+}
