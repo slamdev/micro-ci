@@ -8,7 +8,6 @@ build:
     docker:
       dockerfilePath: deploy/Dockerfile
       cacheFrom:
-      - node:alpine
       - nginx:alpine
       - slamdev/micro-ci-web-ui
 deploy:

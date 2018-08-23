@@ -1,16 +1,6 @@
-FROM golang:alpine AS build
+FROM alpine
 
-WORKDIR /go/src/app
-
-COPY . .
-
-RUN go build -o build/app ./...
-
-FROM alpine AS run
-
-WORKDIR /opt
-
-COPY --from=build /go/src/app/build/app .
+COPY build/app .
 
 EXPOSE 8080
 

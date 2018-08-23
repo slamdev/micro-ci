@@ -8,7 +8,6 @@ build:
     docker:
       dockerfilePath: deploy/Dockerfile
       cacheFrom:
-      - golang:alpine
       - alpine
       - slamdev/micro-ci-pipeline-runner
 deploy:
