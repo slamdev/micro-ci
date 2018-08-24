@@ -238,8 +238,7 @@
   version = "v2.2.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:26cfb6a9af1efbdd64eef8bbc310f82190db0f2b2b909506caac788a56cab579"
+  digest = "1:74142cd2275f77547c35ac51514108d9798a09aa0cf377a5c1084718ef7aa225"
   name = "k8s.io/api"
   packages = [
     "admissionregistration/v1alpha1",
@@ -273,7 +272,8 @@
     "storage/v1beta1",
   ]
   pruneopts = "UT"
-  revision = "644117120187a38be1542f4598cbcf7a1b19a015"
+  revision = "072894a440bdee3a891dea811fe42902311cd2a3"
+  version = "kubernetes-1.11.0"
 
 [[projects]]
   digest = "1:bc7920d9796bd371e092d379b27b6b9bd3b50d135260cbdc10512dde51aec449"
@@ -387,6 +387,8 @@
     "github.com/golang/protobuf/proto",
     "github.com/nats-io/go-nats",
     "gopkg.in/yaml.v2",
+    "k8s.io/api/batch/v1",
+    "k8s.io/api/core/v1",
     "k8s.io/apimachinery/pkg/apis/meta/v1",
     "k8s.io/client-go/kubernetes",
     "k8s.io/client-go/rest",

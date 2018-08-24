@@ -8,6 +8,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	batch "k8s.io/api/batch/v1"
+	core "k8s.io/api/core/v1"
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -42,7 +43,7 @@ func send() {
 	commit := &schema.Commit{
 		Author:   "slamdev",
 		Branch:   "master",
-		Revision: "758e01c07c119aeadb5dc31f7aadac69ece69ebd",
+		Revision: "4fe2db4b6e079ad72a4be6659b1eeabeeebf5f0c",
 	}
 	data, err := proto.Marshal(commit)
 	if err != nil {
@@ -84,12 +85,16 @@ func listen() {
 
 func runPipeline(commit *schema.Commit) {
 	repoUrl := "https://github.com/slamdev/micro-ci.git"
-	cloneDir := "build/clone"
+	cloneDir, err := ioutil.TempDir("", "clone")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer os.RemoveAll(cloneDir)
 	execCommand("git clone --branch master "+repoUrl+" "+cloneDir, "")
 	execCommand("git checkout "+commit.Branch, cloneDir)
 	execCommand("git reset --hard "+commit.Revision, cloneDir)
 	execCommand("git merge --no-ff --no-commit origin/master", cloneDir)
-	content, err := ioutil.ReadFile(cloneDir + ".pipeline.yaml")
+	content, err := ioutil.ReadFile(cloneDir + "/.pipeline.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -104,7 +109,6 @@ func runPipeline(commit *schema.Commit) {
 }
 
 func runJob(job Job) {
-	log.Println(job)
 	var config *rest.Config
 	config, err := rest.InClusterConfig()
 	if err != nil {
@@ -122,15 +126,18 @@ func runJob(job Job) {
 		ObjectMeta: meta.ObjectMeta{
 			Name: "sample",
 		},
-		Spec: batch.JobSpec{},
+		Spec: batch.JobSpec{
+			Template: core.PodTemplateSpec{
+				Spec: job.Spec,
+			},
+		},
 	}
-	log.Println(jobTemplate)
-	_, err = clientset.BatchV1().Jobs("micro-ci").Create(jobTemplate)
+	jobTemplate.Spec.Template.Spec.RestartPolicy = core.RestartPolicyNever
+	instance, err := clientset.BatchV1().Jobs("micro-ci").Create(jobTemplate)
 	if err != nil {
 		log.Fatal(err)
 	}
-	jobList, err := clientset.BatchV1().Jobs("micro-ci").List(meta.ListOptions{})
-	log.Println(jobList.Items)
+	log.Println(instance)
 }
 
 func execCommand(command string, dir string) {
@@ -150,5 +157,5 @@ type Pipeline struct {
 
 type Job struct {
 	Name string
-	Spec map[interface{}]interface{}
+	Spec core.PodSpec
 }
