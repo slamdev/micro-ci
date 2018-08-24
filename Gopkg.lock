@@ -150,6 +150,14 @@
   version = "v2.0.1"
 
 [[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
   digest = "1:dab83a1bbc7ad3d7a6ba1a1cc1760f25ac38cdf7d96a5cdd55cd915a4f5ceaf9"
   name = "github.com/spf13/pflag"
   packages = ["."]
@@ -386,6 +394,7 @@
   input-imports = [
     "github.com/golang/protobuf/proto",
     "github.com/nats-io/go-nats",
+    "github.com/pkg/errors",
     "gopkg.in/yaml.v2",
     "k8s.io/api/batch/v1",
     "k8s.io/api/core/v1",
