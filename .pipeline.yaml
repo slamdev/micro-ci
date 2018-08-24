@@ -1,0 +1,8 @@
+jobs:
+- name: build
+  spec:
+    containers:
+    - name: build
+      image: alpine
+      command:
+      - pwd
