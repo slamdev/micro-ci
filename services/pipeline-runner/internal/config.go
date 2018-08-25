@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"log"
 	"os"
-	"time"
 )
 
 type Config string
@@ -16,15 +15,17 @@ const (
 	BrokerTimeout       Config = "MESSAGE_BROKER_TIMEOUT"
 	BrokerCommitSubject Config = "MESSAGE_BROKER_COMMIT_SUBJECT"
 	RepoUrl             Config = "CI_REPO_URL"
+	Namespace           Config = "NAMESPACE"
 )
 
 var defaults = map[Config]string{
 	ServerPort:          "8080",
 	BrokerHost:          "localhost",
 	BrokerPort:          "4222",
-	BrokerTimeout:       string(15 * time.Second),
+	BrokerTimeout:       "15",
 	BrokerCommitSubject: "commit",
 	RepoUrl:             "https://github.com/slamdev/micro-ci.git",
+	Namespace:           "micro-ci",
 }
 
 func (config Config) Get() string {

@@ -12,12 +12,12 @@ import (
 )
 
 func ListenBroker() error {
-	url := fmt.Sprintf("nats://%v:%v", BrokerHost, BrokerPort)
-	timeout, err := strconv.ParseInt(BrokerTimeout.Get(), 0, 64)
+	url := fmt.Sprintf("nats://%v:%v", BrokerHost.Get(), BrokerPort.Get())
+	timeout, err := strconv.Atoi(BrokerTimeout.Get())
 	if err != nil {
 		return errors.Wrap(err, "Failed to convert BrokerTimeout to int")
 	}
-	timeoutDuration := time.Duration(timeout)
+	timeoutDuration := time.Duration(timeout) * time.Second
 	nc, err := nats.Connect(url, nats.ReconnectWait(timeoutDuration), nats.Timeout(timeoutDuration))
 	if err != nil {
 		return errors.Wrap(err, "Failed to connect to nats server")
@@ -30,12 +30,28 @@ func ListenBroker() error {
 }
 
 func handleCommitMessage(msg *nats.Msg) {
-	commit := &schema.Commit{}
-	err := proto.Unmarshal(msg.Data, commit)
+	commit, err := convert(msg)
 	if err != nil {
-		err = errors.Wrap(err, "Failed to subscribe to BrokerCommitSubject")
 		log.Printf("%+v", err)
 		return
 	}
-	RunPipeline(*commit)
+	pipeline, err := FetchPipeline(commit)
+	if err != nil {
+		log.Printf("%+v", err)
+		return
+	}
+	err = RunPipeline(pipeline, commit)
+	if err != nil {
+		log.Printf("%+v", err)
+		return
+	}
+}
+
+func convert(msg *nats.Msg) (schema.Commit, error) {
+	commit := &schema.Commit{}
+	err := proto.Unmarshal(msg.Data, commit)
+	if err != nil {
+		return *commit, errors.Wrap(err, "Failed to unmarshal commit message")
+	}
+	return *commit, nil
 }
